@@ -56,10 +56,8 @@ class Dataset(dataset):
         return len(self.ct_list)
 
 
-ct_dir = '/home/zcy/Desktop/train/CT/' \
-    if on_server is False else './train/CT/'
-seg_dir = '/home/zcy/Desktop/train/GT/' \
-    if on_server is False else './train/GT/'
+ct_dir = '/raid/zhangjiaming/Model/abdominal-multi-organ-segmentation/3D/train/CT/'
+seg_dir = '/raid/zhangjiaming/Model/abdominal-multi-organ-segmentation/3D/train/GT/'
 
 train_ds = Dataset(ct_dir, seg_dir)
 

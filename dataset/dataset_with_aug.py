@@ -65,6 +65,8 @@ class Dataset(dataset):
         # 处理完毕，将array转换为tensor
         ct_array = torch.FloatTensor(ct_array).unsqueeze(0)
         seg_array = torch.FloatTensor(seg_array)
+        # print('ct.shape = ', ct_array.size())
+        # print('seg.shape = ', seg_array.size())
 
         return ct_array, seg_array
 
@@ -98,18 +100,16 @@ class Dataset(dataset):
             return ct_array, seg_array
 
 
-ct_dir = '/home/zcy/Desktop/train/CT/' \
-    if on_server is False else './train/CT/'
-seg_dir = '/home/zcy/Desktop/train/GT/' \
-    if on_server is False else './train/GT/'
+ct_dir = '/raid/zhangjiaming/Model/abdominal-multi-organ-segmentation/3D/train/CT/'
+seg_dir = '/raid/zhangjiaming/Model/abdominal-multi-organ-segmentation/3D/train/GT/'
 
 train_ds = Dataset(ct_dir, seg_dir)
 
 
 # # 测试代码
-# from torch.utils.data import DataLoader
-# train_dl = DataLoader(train_ds, 6, True)
-# for index, (ct, seg) in enumerate(train_dl):
-#
-#     print(index, ct.size(), seg.size())
-#     print('----------------')
+"""from torch.utils.data import DataLoader
+train_dl = DataLoader(train_ds, 6, True)
+for index, (ct, seg) in enumerate(train_dl):
+
+    print(index, ct.size(), seg.size())
+    print('----------------')"""
