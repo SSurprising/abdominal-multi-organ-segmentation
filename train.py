@@ -9,9 +9,9 @@ import torch
 import torch.backends.cudnn as cudnn
 from torch.utils.data import DataLoader
 
-from net.ResUnet import net
+from net.ResUnet_dice import net
 from loss.ava_Dice_loss import DiceLoss
-from dataset.dataset import train_ds
+from dataset.dataset_with_aug import train_ds
 
 
 # 定义超参数
