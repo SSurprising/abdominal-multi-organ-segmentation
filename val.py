@@ -28,16 +28,18 @@ import SimpleITK as sitk
 import xlsxwriter as xw
 import scipy.ndimage as ndimage
 
-from net.ResUnet import Net
+from net.ResUnet_dice import Net
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
-val_ct_dir = './val/CT/'
-val_seg_dir = './val/GT/'
+val_ct_dir = './3D/test/CT/'
+val_seg_dir = './3D/test/GT/'
 
-organ_pred_dir = './val/pred/'
+organ_pred_dir = './3D/test/pred/'
+if not os.path.exists(organ_pred_dir):
+    os.mkdir(organ_pred_dir)
 
-module_dir = './module/net170-0.943-1.055.pth'
+module_dir = './module/net2290-0.581-0.680.pth'
 
 upper = 350
 lower = -upper
@@ -113,8 +115,7 @@ for file_index, file in enumerate(os.listdir(val_ct_dir)):
     ct_array[ct_array < lower] = lower
 
     # 对CT使用双三次算法进行插值，插值之后的array依然是int16
-    ct_array = ndimage.zoom(ct_array, (ct.GetSpacing()[-1] / slice_thickness, down_scale, down_scale), order=3)
-
+    #ct_array = ndimage.zoom(ct_array, (ct.GetSpacing()[-1] / slice_thickness, down_scale, down_scale), order=3)
     # 在轴向上进行切块取样
     flag = False
     start_slice = 0
@@ -195,7 +196,7 @@ for file_index, file in enumerate(os.listdir(val_ct_dir)):
     pred_seg.SetSpacing(ct.GetSpacing())
 
     sitk.WriteImage(pred_seg, os.path.join(organ_pred_dir, file.replace('img', 'organ')))
-    del pred_seg
+    pred_seg
 
     speed = time() - start_time
 
